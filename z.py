@@ -2,8 +2,8 @@
 # -*- coding: UTF-8 -*-
 import datetime
 import os.path
-from dep.playsound import playsound
-from dep.keyboard import keyboard
+from audioplayer import AudioPlayer
+import keyboard
 import sys
 import os
 sys.path.append(os.getcwd())
@@ -24,12 +24,12 @@ def getOutputFileName(binary):
 def playasync(file):
     if not os.path.isfile(file):
         return
-
-    from platform import system
-    if system() == 'Windows':
-        playsound.playsound(file, False)
-    else:
-        playsound.playsound(file, True)
+    AudioPlayer(file).play(block = False)
+    # from platform import system
+    # if system() == 'Windows':
+    #     playsound.playsound(file, False)
+    # else:
+    #     playsound.playsound(file, True)
     return
 
 
