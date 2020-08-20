@@ -28,6 +28,8 @@ def playasync(file):
     from platform import system
     if system() == 'Windows':
         playsound.playsound(file, False)
+    else:
+        playsound.playsound(file, True)
     return
 
 
