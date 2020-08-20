@@ -1,6 +1,6 @@
 #!/usr/bin/python3
 # -*- coding: UTF-8 -*-
-
+import datetime
 import os.path
 from dep.playsound import playsound
 from dep.keyboard import keyboard
@@ -8,8 +8,17 @@ import sys
 import os
 sys.path.append(os.getcwd())
 
-
+# Prevent keyboard input
 preventMode = True
+
+
+def getOutputFileName(binary):
+    directory = os.getcwd() + "/output"
+    ext = ".txt"
+    if(binary):
+        ext = ".bin"
+    filename = "record_"+datetime.datetime.now().strftime('%Y-%m-%d')
+    return directory + "/" + filename + ext
 
 
 def playasync(file):
@@ -81,7 +90,7 @@ def trig(data):
 
 
 def backspace():
-    with open("out.txt", 'rb+') as file:
+    with open(getOutputFileName(False), 'rb+') as file:
         file.seek(-1, os.SEEK_END)
         if file.tell() == 0:
             return
@@ -142,7 +151,7 @@ def handle(buffer):
 
         print(result)
 
-        with open("out.txt", "a") as outputFile:
+        with open(getOutputFileName(False), "a") as outputFile:
             outputFile.write(result)
 
     playasync(audioFile)
@@ -165,7 +174,7 @@ def cb(evt):
     else:
         return
     trig(name)
-    with open("out.bin", 'ab') as file:
+    with open(getOutputFileName(True), 'ab') as file:
         file.write(bytes([evt.scan_code]))
     return
 
