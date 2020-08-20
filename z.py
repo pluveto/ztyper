@@ -6,6 +6,8 @@ from audioplayer import AudioPlayer
 import keyboard
 import sys
 import os
+import subprocess
+
 sys.path.append(os.getcwd())
 
 # Prevent keyboard input
@@ -24,12 +26,11 @@ def getOutputFileName(binary):
 def playasync(file):
     if not os.path.isfile(file):
         return
-    AudioPlayer(file).play(block = False)
-    # from platform import system
-    # if system() == 'Windows':
-    #     playsound.playsound(file, False)
-    # else:
-    #     playsound.playsound(file, True)
+    # AudioPlayer(file).play(block = False)
+    from platform import system
+    if system() != 'Windows':        
+        # os.system('aplay ./assets/audio/typewriter.wav -q')
+        subprocess.Popen(['aplay', file,'-q' ])
     return
 
 
